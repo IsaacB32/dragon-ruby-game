@@ -1,4 +1,7 @@
-require 'Grid'
+require 'app/Grid.rb'
+require 'app/GridObject.rb'
+require 'app/Player.rb'
+require 'app/PriorityDrawer.rb'
 
 #SCREEN SIZE
 # 1280x720 pixels
@@ -68,11 +71,21 @@ end
 
 
 def tick args
-  args.state.origin ||= [getWidth.div(2) - (getGridSize).div(2), getHeight.div(2) - (getGridSize).div(2)]
-  args.state.grid ||= Grid.new(args, origin, 20,20)
-  args.state.grid.draw()
+  args.state.drawer = PriorityDrawer.new()
+  args.state.origin ||= [getWidth.div(2), getHeight.div(2)]
+  ##GRID
+  args.state.grid ||= Grid.new(args, args.state.origin, 10,10, 30)
+  args.state.drawer.addDrawableToList(args.state.grid, 1)
+  ##PLAYER
+  args.state.player = PlayerObject.new(args, args.state.grid, [20,20], [255,0,0])
+  args.state.drawer.addDrawableToList(args.state.player, 2)
+
+
+  args.state.drawer.drawScreen
   # drawCharater args
   # drawGrid args
+
+  # args.outputs.solids << [100,500,10,10,255,0,0]
 
   # drawWalls args
 
@@ -145,40 +158,40 @@ end
 ##--##
 
 ##GRID##
-  def drawGrid args
-    args.state.origin ||= [getWidth.div(2) - (getGridSize).div(2), getHeight.div(2) - (getGridSize).div(2)]
-    squareSize ||= getSquareSize
+  # def drawGrid args
+  #   args.state.origin ||= [getWidth.div(2) - (getGridSize).div(2), getHeight.div(2) - (getGridSize).div(2)]
+  #   squareSize ||= getSquareSize
 
-    (getSquaresInGrid + 1).times do |i|
-      args.outputs.lines << [
-        args.state.origin.x + i * squareSize, 
-        args.state.origin.y, 
-        args.state.origin.x + i * squareSize, 
-        getHeight - args.state.origin.y
-      ]
-    end
+  #   (getSquaresInGrid + 1).times do |i|
+  #     args.outputs.lines << [
+  #       args.state.origin.x + i * squareSize, 
+  #       args.state.origin.y, 
+  #       args.state.origin.x + i * squareSize, 
+  #       getHeight - args.state.origin.y
+  #     ]
+  #   end
 
-    (getSquaresInGrid + 1).times do |i|
-      args.outputs.lines << [
-        args.state.origin.x, 
-        args.state.origin.y + i * squareSize, 
-        getWidth - args.state.origin.x, 
-        args.state.origin.y + i * squareSize
-      ] 
-    end
-  end
+  #   (getSquaresInGrid + 1).times do |i|
+  #     args.outputs.lines << [
+  #       args.state.origin.x, 
+  #       args.state.origin.y + i * squareSize, 
+  #       getWidth - args.state.origin.x, 
+  #       args.state.origin.y + i * squareSize
+  #     ] 
+  #   end
+  # end
 
-  def getGridLocation(x,y)
-    center = zeroLocationCenter
+  # def getGridLocation(x,y)
+  #   center = zeroLocationCenter
 
-    squareIndex = [getSquareSize * x, getSquareSize * y]
-    [center.x + squareIndex.x, center.y + squareIndex.y]
-  end
+  #   squareIndex = [getSquareSize * x, getSquareSize * y]
+  #   [center.x + squareIndex.x, center.y + squareIndex.y]
+  # end
 
-  def getGridCenterForSprite(x,y, halfSpriteSize)
-    position = getGridLocation(x, y)
-    [position.x - halfSpriteSize.x, position.y - halfSpriteSize.y]
-  end
+  # def getGridCenterForSprite(x,y, halfSpriteSize)
+  #   position = getGridLocation(x, y)
+  #   [position.x - halfSpriteSize.x, position.y - halfSpriteSize.y]
+  # end
 ##--##
 
 def reset args

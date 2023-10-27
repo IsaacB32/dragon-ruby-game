@@ -37,3 +37,5 @@ left_right
 down
 ()
 has_focus
+to_f
+raise

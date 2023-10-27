@@ -1,20 +1,24 @@
+require 'app/Drawable.rb'
+
 #class for any object that exists on the grid
 class GridObject
-    def initialize(a, indexPos, scale, color)
-      @args = a
-      @indexPosition = indexPos
-      @size = scale
-      @colorR = color.x
-      @colorG = color.y
-      @colorB = color.z
-  
-      @position = findPositionOnGrid
-    end
-  
-    def findPositionOnGrid
-      center = zeroLocationCenter
-  
-      squareIndex = [getSquareSize * @indexPosition.x, getSquareSize * @indexPosition.y]
-      [center.x + squareIndex.x - @size.x.idiv(2), center.y + squareIndex.y - @size.y.idiv(2)]
-    end
+  include Drawable
+
+  def initialize(a, grid, scale, color)
+    @args = a
+    @homeGrid = grid
+    @indexPos = [0,0]
+    @size = scale
+    @colorRGB = [color.x, color.y, color.z]
+
+    @position = gridPosition
   end
+
+  def draw
+    raise "not implemented in GridObject"
+  end
+
+  def gridPosition
+    gridPositionCorner = @homeGrid.getPositionFromIndex(@indexPos.x,@indexPos.y)
+  end
+end

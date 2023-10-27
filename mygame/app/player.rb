@@ -1,22 +1,34 @@
+require 'app/InputHandle'
+
 class PlayerObject < GridObject
-    def initialize(a, indexPos, scale, color)
-        super
+    def initialize(a, grid, scale, color)
+        super(a, grid, scale, color)
         @movement = [0,0]
     end
 
-    def drawOnGrid
-        @indexPosition = (calculateCharacterMovement @args)
+    def draw
+        position = gridPosition()
 
-        args.outputs.solids << [
-        args.state.characterPosition.x,
-        args.state.characterPosition.y, 
-        getPlayerSize,getPlayerSize,
-        255,0,0
+
+        @args.outputs.solids << [
+        position.x,
+        position.y, 
+        @size.x,@size.y,
+        @colorRGB.x,@colorRGB.y,@colorRGB.z
         ]
+
+        #@indexPosition = (calculateCharacterMovement)
+
+        # args.outputs.solids << [
+        # args.state.characterPosition.x,
+        # args.state.characterPosition.y, 
+        # getPlayerSize,getPlayerSize,
+        # 255,0,0
+        # ]
     end
 
-    def calculateCharacterMovement args
-        @movement ||= [0,0]
+
+    def calculateCharacterMovement
         #@position ||= getGridCenterForSprite(0,0, getHalfPlayerSize)
         if(canMove args)
         @movement.x += args.inputs.left_right
@@ -25,7 +37,6 @@ class PlayerObject < GridObject
         checkCharacterBounds @args
         #args.state.position = getGridCenterForSprite(args.state.movement.x, args.state.movement.y, getHalfPlayerSize)
         end
-        #args.state.position
     end
 
     def checkCharacterBounds args
