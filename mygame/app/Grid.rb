@@ -1,7 +1,8 @@
 class Grid 
     def initialize(a, centerLocation, xSquareNumber, ySquareNumber, sizeOfSquare)
-        super(1)
-        @args = a
+        #you removed this:         super(1)
+        
+        @args = a 
         @center = centerLocation
         @xSquares = xSquareNumber
         @ySquares = ySquareNumber
@@ -32,4 +33,17 @@ class Grid
         squareIndex = [@squareSize * x, @squareSize * y]
         [@gridCorner.x + squareIndex.x, @gridCorner.y + squareIndex.y]
     end
+
+    #GET
+        def getSquaresInGridX
+            @xSquares
+        end
+        def getSquaresInGridY
+            @ySquares
+        end
+
+        def getHalfSquareSize
+            @squareSize.idiv(2)
+        end
+    #----
 end
