@@ -29,7 +29,7 @@ def tick args
 end
 
 def drawGrid args
-  args.state.grid ||= Grid.new(args, args.state.origin, 10,10, 30)
+  args.state.grid = Grid.new(args, args.state.origin, 10,10, 30)
   args.state.drawer.addDrawableToList(args.state.grid, 1)
 end
 
@@ -37,21 +37,6 @@ def drawPlayer args
   args.state.player ||= PlayerObject.new(args, args.state.grid, [20,20], [255,0,0])
   args.state.drawer.addDrawableToList(args.state.player, 2)
 end
-
-#WALLS##
-  def drawWalls args
-    (8).times do |i|
-      wall = WallObject.new(args, [i,8],[getSquareSize,getSquareSize],[0,0,0])
-      wall.drawOnGrid
-     # drawWall(args, i, 4)
-    end
-  end
-
-  def drawWall args, x, y
-    position = getGridCenterForSprite(x,y, [getSquareSize.idiv(2), getSquareSize.idiv(2)])
-    args.outputs.solids << [position.x, position.y, getSquareSize, getSquareSize, 0,0,0];
-  end
-##--##s
 
   def resetCharacterMovement args
     args.state.movement = [0,0]

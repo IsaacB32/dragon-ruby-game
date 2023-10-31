@@ -7,6 +7,7 @@ class PlayerObject < GridObject
     end
 
     def draw
+        (addToGridMatrix)
         #set position
         @indexPos = @movement
         screenPosition = (gridPosition)

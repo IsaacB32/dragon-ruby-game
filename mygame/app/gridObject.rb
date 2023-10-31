@@ -19,7 +19,11 @@ class GridObject
 
 
   def draw
-    raise "not implemented in GridObject"
+    raise "draw not implemented on GridObject"
+  end
+
+  def addToGridMatrix
+    @homeGrid.setGridMatrix(@indexPos.x, @indexPos.y, self)
   end
 
   def gridPosition
@@ -28,19 +32,26 @@ class GridObject
   end
 
   def checkGridBounds
-    if @indexPos.x < 0
-      @indexPos.x = 0
-      end
-      if @indexPos.y < 0
-      @indexPos.y = 0
-      end
+    neighbors = @homeGrid.checkNeighbors(@indexPos)
+    (neighbors).each do |n|
+      
+    end
 
-      #maxs
-      if @indexPos.x > @homeGrid.getSquaresInGridX - 1
-      @indexPos.x = @homeGrid.getSquaresInGridX - 1
+    #CHECK END BOUNDS
+      if @indexPos.x < 0
+        @indexPos.x = 0
+        end
+        if @indexPos.y < 0
+        @indexPos.y = 0
+        end
+
+        #maxs
+        if @indexPos.x > @homeGrid.getSquaresInGridX - 1
+        @indexPos.x = @homeGrid.getSquaresInGridX - 1
+        end
+        if @indexPos.y > @homeGrid.getSquaresInGridY - 1
+        @indexPos.y = @homeGrid.getSquaresInGridY - 1
+        end
       end
-      if @indexPos.y > @homeGrid.getSquaresInGridY - 1
-      @indexPos.y = @homeGrid.getSquaresInGridY - 1
-      end
-  end
+    #-----
 end
