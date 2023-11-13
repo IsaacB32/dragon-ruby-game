@@ -1,6 +1,6 @@
 class PriorityDrawer
-    def initialize()
-        @list = []
+    def initialize(thingsToDraw)
+        @list = thingsToDraw
     end
 
     def addDrawableToList(drawable, priorityID)
@@ -10,7 +10,11 @@ class PriorityDrawer
     
       def drawScreen
         @list.each do |item|
-          item[:drawable].draw
+          item.draw
         end
+      end
+
+      def debugClearAll
+        @list = []
       end
 end
